@@ -439,69 +439,67 @@ let escapeCount = 0;
    첫 화면 클릭
 ========================================== */
 
-function startExperience(event) {
+let started = false;
+let musicStarted = false;
 
+async function startExperience() {
+
+    // 이미 화면을 넘어갔다면 다시 실행하지 않음
     if (started) return;
 
-    started = true;
-
-
-    /*
-       사용자가 직접 화면을 누른 순간이므로
-       브라우저의 자동재생 제한을 통과할 가능성이 높음
-    */
-
+    // 음악 재생 시도
     try {
-
         loveSong.volume = 0.65;
-
         loveSong.currentTime = 0;
 
-        const playPromise =
-            loveSong.play();
+        await loveSong.play();
 
-        if (playPromise !== undefined) {
-
-            playPromise.catch(() => {
-
-                /*
-                   혹시 브라우저가 막으면
-                   다음 화면 터치 때 다시 시도
-                */
-
-                started = false;
-
-            });
-
-        }
+        musicStarted = true;
 
     } catch (error) {
-
-        started = false;
-
+        console.log("Music play blocked:", error);
+        musicStarted = false;
     }
 
+    // 화면 전환
+    started = true;
 
-    /* 첫 화면 → 고백 화면 */
+    introScreen.style.display = "none";
 
-    introScreen.style.display =
-        "none";
+    firstScreen.style.display = "block";
 
-    firstScreen.style.display =
-        "block";
-
-    firstScreen.classList.add(
-        "fade"
-    );
-
+    firstScreen.classList.add("fade");
 }
 
 
 /*
-   화면을 실제로 누르면 실행
+첫 화면을 누르면 음악 + 다음 화면
 */
-
 introScreen.addEventListener(
+    "pointerdown",
+    startExperience
+);
+
+
+/*
+혹시 첫 번째 재생이 실패했을 경우
+사용자가 화면을 다시 누르면 음악 재생 재시도
+*/
+document.addEventListener("pointerdown", () => {
+
+    if (!musicStarted && started) {
+
+        loveSong.volume = 0.65;
+
+        loveSong.play()
+            .then(() => {
+                musicStarted = true;
+            })
+            .catch(() => {});
+
+    }
+
+});(
     "pointerdown",
     startExperience
 );
