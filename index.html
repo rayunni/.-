@@ -3,16 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>For Khaiii 💗</title>
 
 <style>
-* {
-    box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
-html,
-body {
+html, body {
     margin: 0;
     width: 100%;
     height: 100%;
@@ -28,20 +24,14 @@ body {
     width: 100%;
     height: 100vh;
     height: 100svh;
-
     display: flex;
     justify-content: center;
     align-items: center;
-
     text-align: center;
     padding: 25px;
 }
 
-
-/* =========================
-   첫 화면
-========================= */
-
+/* 첫 화면 */
 #introScreen {
     width: 100%;
     cursor: pointer;
@@ -50,35 +40,28 @@ body {
 
 .introTitle {
     margin: 0;
-
     color: #d72832;
-
     font-size: clamp(30px, 6vw, 58px);
     font-weight: bold;
 }
 
 .introSubtitle {
     margin-top: 25px;
-
     color: #806d69;
-
     font-family: monospace;
     font-size: clamp(17px, 3vw, 23px);
 }
 
 .tapHint {
     margin-top: 50px;
-
     color: #d72832;
-
     font-size: 30px;
-
     animation: pulse 1.4s infinite;
 }
 
 @keyframes pulse {
     0%, 100% {
-        opacity: 0.4;
+        opacity: .4;
         transform: scale(1);
     }
 
@@ -88,14 +71,9 @@ body {
     }
 }
 
-
-/* =========================
-   고백 화면
-========================= */
-
+/* 고백 화면 */
 #firstScreen {
     display: none;
-
     width: 100%;
     max-width: 900px;
 }
@@ -103,55 +81,36 @@ body {
 .firstPhoto {
     width: min(400px, 75vw);
     max-height: 48vh;
-
     object-fit: contain;
-
     margin-bottom: 35px;
-
     border-radius: 12px;
 }
 
 #question {
     margin: 0 0 32px;
-
     color: #d72832;
-
     font-family: monospace;
-
     font-size: clamp(23px, 4vw, 36px);
-
     font-weight: 500;
-
-    transition: color 0.2s ease;
+    transition: color .2s ease;
 }
 
 .buttons {
     display: flex;
-
     justify-content: center;
     align-items: center;
-
     gap: 15px;
-
     min-height: 80px;
 }
 
 button {
     border: none;
-
     border-radius: 50px;
-
     padding: 16px 38px;
-
     font-size: 21px;
     font-weight: bold;
-
     cursor: pointer;
-
-    transition:
-        transform 0.25s ease,
-        opacity 0.25s ease;
-
+    transition: transform .25s ease, opacity .25s ease;
     touch-action: manipulation;
 }
 
@@ -163,75 +122,50 @@ button {
 #no {
     background: #fffafa;
     color: #796967;
-
     z-index: 30;
 }
 
 #message {
     min-height: 35px;
-
     margin-top: 20px;
-
     color: #d72832;
-
     font-family: monospace;
-
     font-size: 19px;
-
     font-weight: bold;
 }
 
-
-/* =========================
-   성공 화면
-========================= */
-
+/* 성공 화면 */
 #successScreen {
     display: none;
-
     width: 100%;
     max-width: 900px;
-
     position: relative;
-
     z-index: 5;
 }
 
 #successText {
     margin-bottom: 25px;
-
     color: #d72832;
-
     font-family: monospace;
-
     font-size: clamp(28px, 6vw, 55px);
-
     font-weight: bold;
 }
 
 #successPhoto {
     width: min(500px, 82vw);
-
     max-height: 60vh;
-
     object-fit: contain;
-
     border-radius: 15px;
 }
 
-
-/* =========================
-   화면 전환
-========================= */
-
 .fade {
-    animation: fadeIn 0.7s ease;
+    animation: fadeIn .7s ease;
 }
 
 @keyframes fadeIn {
     from {
-        opacity: 0;
-        transform: scale(0.94);
+        opacity: .0;
+        transform: scale(.94);
     }
 
     to {
@@ -240,36 +174,23 @@ button {
     }
 }
 
-
-/* =========================
-   폭죽
-========================= */
-
+/* 폭죽 */
 .firework {
     position: fixed;
-
     width: 7px;
     height: 7px;
-
     border-radius: 50%;
-
     pointer-events: none;
-
     z-index: 100;
-
     animation:
         fireworkMove 1.5s
-        cubic-bezier(0.1, 0.7, 0.2, 1)
+        cubic-bezier(.1,.7,.2,1)
         forwards;
 }
 
 @keyframes fireworkMove {
-
     0% {
-        transform:
-            translate(0, 0)
-            scale(1.5);
-
+        transform: translate(0,0) scale(1.5);
         opacity: 1;
     }
 
@@ -278,26 +199,18 @@ button {
     }
 
     100% {
-        transform:
-            translate(var(--x), var(--y))
-            scale(0.1);
-
+        transform: translate(var(--x),var(--y)) scale(.1);
         opacity: 0;
     }
 }
-
 </style>
 </head>
-
 
 <body>
 
 <div id="app">
 
-    <!-- =====================
-         첫 번째 화면
-    ====================== -->
-
+    <!-- 첫 번째 화면 -->
     <section id="introScreen">
 
         <h1 class="introTitle">
@@ -315,10 +228,7 @@ button {
     </section>
 
 
-    <!-- =====================
-         고백 화면
-    ====================== -->
-
+    <!-- 고백 화면 -->
     <section id="firstScreen">
 
         <img
@@ -348,10 +258,7 @@ button {
     </section>
 
 
-    <!-- =====================
-         성공 화면
-    ====================== -->
-
+    <!-- 성공 화면 -->
     <section id="successScreen">
 
         <div id="successText">
@@ -369,29 +276,13 @@ button {
 </div>
 
 
-<!-- =====================
-     음악
-====================== -->
-
-<audio
-    id="loveSong"
-    preload="auto"
->
-    <source
-        src="love-song.mp3"
-        type="audio/mpeg"
-    >
+<!-- 음악 -->
+<audio id="loveSong" preload="auto" playsinline>
+    <source src="love-song.mp3" type="audio/mpeg">
 </audio>
 
-
-<audio
-    id="fanfare"
-    preload="auto"
->
-    <source
-        src="fanfare.mp3"
-        type="audio/mpeg"
-    >
+<audio id="fanfare" preload="auto" playsinline>
+    <source src="fanfare.mp3" type="audio/mpeg">
 </audio>
 
 
@@ -426,15 +317,37 @@ const fanfare =
 
 
 let started = false;
-
 let noCount = 0;
-
 let escapeCount = 0;
+let noLocked = false;
 
 
 /* ==========================================
-   첫 화면
+   첫 화면 → 고백 화면
 ========================================== */
+
+async function playLoveSong() {
+
+    try {
+
+        loveSong.volume = 0.65;
+        loveSong.currentTime = 0;
+
+        await loveSong.play();
+
+        console.log("Love song started!");
+
+    } catch (error) {
+
+        console.log(
+            "Love song could not start:",
+            error
+        );
+
+    }
+
+}
+
 
 function startExperience() {
 
@@ -444,44 +357,23 @@ function startExperience() {
 
     started = true;
 
-
     /*
-       사용자가 직접 화면을 클릭했기 때문에
-       여기에서 음악을 재생
+       사용자가 직접 화면을 누른 순간에
+       음악 재생
     */
 
-    loveSong.volume = 0.65;
-
-    loveSong.currentTime = 0;
-
-
-    const music =
-        loveSong.play();
-
+    playLoveSong();
 
     /*
-       음악 재생에 성공/실패하더라도
-       화면은 정상적으로 넘어감
+       첫 화면 숨기기
     */
-
-    if (music !== undefined) {
-
-        music.catch((error) => {
-
-            console.log(
-                "Love song could not start:",
-                error
-            );
-
-        });
-
-    }
-
-
-    /* 화면 전환 */
 
     introScreen.style.display =
         "none";
+
+    /*
+       고백 화면 보여주기
+    */
 
     firstScreen.style.display =
         "block";
@@ -494,18 +386,19 @@ function startExperience() {
 
 
 /*
-   첫 화면 어디든 클릭/터치
+   첫 화면을 클릭/터치하면 시작
 */
 
 introScreen.addEventListener(
     "pointerdown",
-    startExperience
+    startExperience,
+    { once: true }
 );
 
 
 /*
-   혹시 브라우저가 첫 재생을 막은 경우,
-   고백 화면을 처음 클릭하면 다시 시도
+   혹시 첫 재생이 막혔으면
+   고백 화면을 클릭했을 때 다시 시도
 */
 
 document.addEventListener(
@@ -533,16 +426,34 @@ document.addEventListener(
 
 function moveNoButton() {
 
+    /*
+       NO가 이미 사라졌거나
+       잠긴 상태라면 아무것도 하지 않음
+    */
+
+    if (
+        noLocked ||
+        noButton.style.display === "none"
+    ) {
+        return;
+    }
+
+
     escapeCount++;
 
 
     /*
-       NO REJECT 상태에서는
-       절대로 다시 움직이지 않음
+       7번째 도망 시도에서는
+       화면에 멈춰있지 않고 바로 사라짐
     */
 
     if (escapeCount >= 7) {
+
+        noButton.style.display =
+            "none";
+
         return;
+
     }
 
 
@@ -550,28 +461,38 @@ function moveNoButton() {
 
 
     const maxX =
-        window.innerWidth -
-        noButton.offsetWidth -
-        padding;
+        Math.max(
+            padding,
+            window.innerWidth -
+            noButton.offsetWidth -
+            padding
+        );
 
 
     const maxY =
-        window.innerHeight -
-        noButton.offsetHeight -
-        padding;
+        Math.max(
+            padding,
+            window.innerHeight -
+            noButton.offsetHeight -
+            padding
+        );
 
 
     const x =
+        padding +
+        Math.random() *
         Math.max(
-            padding,
-            Math.random() * maxX
+            1,
+            maxX - padding
         );
 
 
     const y =
+        padding +
+        Math.random() *
         Math.max(
-            padding,
-            Math.random() * maxY
+            1,
+            maxY - padding
         );
 
 
@@ -584,161 +505,187 @@ function moveNoButton() {
     noButton.style.top =
         y + "px";
 
-
-    /*
-       PC에서 7번 도망가면
-       NO REJECT 표시
-    */
-
-    if (escapeCount === 7) {
-
-        question.textContent =
-            "NO REJECT";
-
-        question.style.color =
-            "#d00000";
-
-
-        /*
-           중요:
-           여기서는 NO를 바로 없애지 않음.
-
-           NO REJECT가 계속 보이도록 유지.
-        */
-
-    }
-
 }
 
 
 /*
-   PC에서 NO에 마우스를 갖다 대면 도망
+   PC에서 NO에 마우스를 가져가면 도망
 */
 
-noButton.addEventListener("mouseenter", function () {
+noButton.addEventListener(
+    "mouseenter",
+    () => {
 
-    /*
-       NO REJECT 상태에서는
-       절대 움직이지 않음
-    */
+        if (noLocked) {
+            return;
+        }
 
-    if (noCount >= 3) {
-        return;
+
+        const isDesktop =
+            window.matchMedia(
+                "(hover: hover) and (pointer: fine)"
+            ).matches;
+
+
+        if (isDesktop) {
+
+            moveNoButton();
+
+        }
+
     }
+);
 
-    const isDesktop =
-        window.matchMedia(
-            "(hover: hover) and (pointer: fine)"
-        ).matches;
-
-    if (isDesktop) {
-        moveNoButton();
-    }
-
-});
 
 
 /* ==========================================
-   NO BUTTON
+   NO 클릭
 ========================================== */
 
-noButton.addEventListener("click", function () {
-
-    noCount++;
-
-    /* =========================
-       첫 번째 NO
-    ========================= */
-
-    if (noCount === 1) {
-
-        question.textContent = "Are u sure?";
-        message.textContent = "(Think again!)";
-
-        setTimeout(function () {
-
-            question.textContent =
-                "Do you want to go out with me?";
-
-            message.textContent = "";
-
-        }, 1300);
-
-    }
-
-
-    /* =========================
-       두 번째 NO
-    ========================= */
-
-    else if (noCount === 2) {
-
-        question.textContent = "真的吗？";
-        message.textContent = "(Think again!)";
-
-        setTimeout(function () {
-
-            question.textContent =
-                "Do you want to go out with me?";
-
-            message.textContent = "";
-
-        }, 1300);
-
-    }
-
-
-    /* =========================
-       세 번째 NO
-    ========================= */
-
-    else if (noCount === 3) {
+noButton.addEventListener(
+    "click",
+    () => {
 
         /*
-           세 번째로 NO를 눌렀을 때
-           바로 NO REJECT 표시
+           NO가 잠겼으면 아무것도 하지 않음
         */
 
-        question.textContent = "NO REJECT";
-
-        question.style.color = "#d00000";
-
-        message.textContent = "";
+        if (noLocked) {
+            return;
+        }
 
 
-        /*
-           NO REJECT가 표시되는 동안에는
-           아무것도 움직이지 않음
-        */
-
-        noButton.style.pointerEvents = "none";
+        noCount++;
 
 
-        /*
-           잠시 후 질문으로 돌아가고
-           이때 처음으로 NO가 사라짐
-        */
+        /* =========================
+           첫 번째 NO
+        ========================= */
 
-        setTimeout(function () {
+        if (noCount === 1) {
 
             question.textContent =
-                "Do you want to go out with me?";
+                "Are u sure?";
 
-            question.style.color =
-                "#d72832";
+            message.textContent =
+                "(Think again!)";
+
+
+            setTimeout(
+                () => {
+
+                    if (noCount === 1) {
+
+                        question.textContent =
+                            "Do you want to go out with me?";
+
+                        message.textContent =
+                            "";
+
+                    }
+
+                },
+                1300
+            );
+
+        }
+
+
+        /* =========================
+           두 번째 NO
+        ========================= */
+
+        else if (noCount === 2) {
+
+            question.textContent =
+                "真的吗？";
+
+            message.textContent =
+                "(Think again!)";
+
+
+            setTimeout(
+                () => {
+
+                    if (noCount === 2) {
+
+                        question.textContent =
+                            "Do you want to go out with me?";
+
+                        message.textContent =
+                            "";
+
+                    }
+
+                },
+                1300
+            );
+
+        }
+
+
+        /* =========================
+           세 번째 NO
+        ========================= */
+
+        else if (noCount === 3) {
 
             /*
-               ⭐ 세 번째 클릭이 끝난 후에만
-               NO 제거
+               이제 NO를 잠금
             */
 
-            noButton.style.display = "none";
+            noLocked = true;
 
-        }, 1600);
+
+            question.textContent =
+                "NO REJECT";
+
+            question.style.color =
+                "#d00000";
+
+            message.textContent =
+                "";
+
+
+            /*
+               NO REJECT가 뜬 동안
+               NO가 움직이지 않게 함
+            */
+
+            noButton.style.pointerEvents =
+                "none";
+
+
+            /*
+               1.6초 후 NO 제거
+            */
+
+            setTimeout(
+                () => {
+
+                    question.textContent =
+                        "Do you want to go out with me?";
+
+                    question.style.color =
+                        "#d72832";
+
+
+                    /*
+                       ⭐ 세 번째로 실제 NO를 누른
+                       뒤에만 NO가 사라짐
+                    */
+
+                    noButton.style.display =
+                        "none";
+
+                },
+                1600
+            );
+
+        }
 
     }
-
-});
+);
 
 
 
@@ -748,19 +695,20 @@ noButton.addEventListener("click", function () {
 
 yesButton.addEventListener(
     "click",
-    () => {
+    async () => {
 
         /*
-           첫 번째 음악 정지
+           첫 번째 노래 정지
         */
 
         loveSong.pause();
 
-        loveSong.currentTime = 0;
+        loveSong.currentTime =
+            0;
 
 
         /*
-           고백 화면 숨김
+           고백 화면 숨기기
         */
 
         firstScreen.style.display =
@@ -768,7 +716,7 @@ yesButton.addEventListener(
 
 
         /*
-           성공 화면 표시
+           성공 화면
         */
 
         successScreen.style.display =
@@ -780,7 +728,7 @@ yesButton.addEventListener(
 
 
         /*
-           축하 음악
+           축하 음악 시작
         */
 
         fanfare.pause();
@@ -792,30 +740,22 @@ yesButton.addEventListener(
             0.9;
 
 
-        const celebration =
-            fanfare.play();
+        try {
 
+            await fanfare.play();
 
-        if (
-            celebration !== undefined
-        ) {
+        } catch (error) {
 
-            celebration.catch(
-                (error) => {
-
-                    console.log(
-                        "Fanfare could not start:",
-                        error
-                    );
-
-                }
+            console.log(
+                "Fanfare could not start:",
+                error
             );
 
         }
 
 
         /*
-           폭죽 시작
+           폭죽
         */
 
         startFireworks();
@@ -826,7 +766,7 @@ yesButton.addEventListener(
 
 
 /* ==========================================
-   폭죽 하나 만들기
+   폭죽 하나
 ========================================== */
 
 function createFirework(
@@ -883,28 +823,23 @@ function createFirework(
 
         const distance =
             80 +
-            Math.random() * 170;
-
-
-        const x =
-            Math.cos(angle) *
-            distance;
-
-
-        const y =
-            Math.sin(angle) *
-            distance;
+            Math.random() *
+            170;
 
 
         particle.style.setProperty(
             "--x",
-            x + "px"
+            Math.cos(angle) *
+            distance +
+            "px"
         );
 
 
         particle.style.setProperty(
             "--y",
-            y + "px"
+            Math.sin(angle) *
+            distance +
+            "px"
         );
 
 
@@ -924,7 +859,9 @@ function createFirework(
 
         setTimeout(
             () => {
+
                 particle.remove();
+
             },
             1500
         );
@@ -1000,7 +937,7 @@ function startFireworks() {
 
 
     /*
-       두 번째 폭죽 세트
+       두 번째 폭죽
     */
 
     setTimeout(
@@ -1030,7 +967,7 @@ function startFireworks() {
 
 
     /*
-       마지막 가운데 대형 폭죽
+       마지막 대형 폭죽
     */
 
     setTimeout(
