@@ -615,175 +615,130 @@ function moveNoButton() {
    PC에서 NO에 마우스를 갖다 대면 도망
 */
 
-noButton.addEventListener(
-    "mouseenter",
-    () => {
+noButton.addEventListener("mouseenter", function () {
 
-        const isDesktop =
-            window.matchMedia(
-                "(hover: hover) and (pointer: fine)"
-            ).matches;
+    /*
+       NO REJECT 상태에서는
+       절대 움직이지 않음
+    */
 
-
-        if (isDesktop) {
-
-            moveNoButton();
-
-        }
-
+    if (noCount >= 3) {
+        return;
     }
-);
 
+    const isDesktop =
+        window.matchMedia(
+            "(hover: hover) and (pointer: fine)"
+        ).matches;
+
+    if (isDesktop) {
+        moveNoButton();
+    }
+
+});
 
 
 /* ==========================================
-   모바일 - NO
+   NO BUTTON
 ========================================== */
 
-noButton.addEventListener(
-    "click",
-    () => {
+noButton.addEventListener("click", function () {
 
-        const isMobile =
-            window.matchMedia(
-                "(pointer: coarse)"
-            ).matches;
+    noCount++;
 
+    /* =========================
+       첫 번째 NO
+    ========================= */
 
-        /*
-           PC에서는 NO를 클릭하면 도망
-        */
+    if (noCount === 1) {
 
-        if (!isMobile) {
+        question.textContent = "Are u sure?";
+        message.textContent = "(Think again!)";
 
-            moveNoButton();
-
-            return;
-
-        }
-
-
-        /*
-           실제로 NO를 눌렀을 때만
-           횟수가 올라감
-        */
-
-        noCount++;
-
-
-        /* =========================
-           1번째 NO
-        ========================= */
-
-        if (noCount === 1) {
+        setTimeout(function () {
 
             question.textContent =
-                "Are u sure?";
+                "Do you want to go out with me?";
 
-            message.textContent =
-                "(Think again!)";
+            message.textContent = "";
 
-
-            setTimeout(
-                () => {
-
-                    /*
-                       다시 첫 문장
-                    */
-
-                    question.textContent =
-                        "Do you want to go out with me?";
-
-                    message.textContent =
-                        "";
-
-                },
-                1300
-            );
-
-        }
-
-
-        /* =========================
-           2번째 NO
-        ========================= */
-
-        else if (noCount === 2) {
-
-            question.textContent =
-                "真的吗？";
-
-            message.textContent =
-                "(Think again!)";
-
-
-            setTimeout(
-                () => {
-
-                    question.textContent =
-                        "Do you want to go out with me?";
-
-                    message.textContent =
-                        "";
-
-                },
-                1300
-            );
-
-        }
-
-
-        /* =========================
-           3번째 NO
-        ========================= */
-
-        else if (noCount === 3) {
-
-            /*
-               NO를 세 번째 눌렀을 때만
-               NO REJECT
-            */
-
-            question.textContent =
-                "NO REJECT";
-
-            question.style.color =
-                "#d00000";
-
-            message.textContent =
-                "";
-
-
-            /*
-               여기서는 잠시 보여준 후
-               다시 질문으로 돌아감
-            */
-
-            setTimeout(
-                () => {
-
-                    question.textContent =
-                        "Do you want to go out with me?";
-
-                    question.style.color =
-                        "#d72832";
-
-
-                    /*
-                       ⭐ 이제서야 NO가 사라짐
-                    */
-
-                    noButton.style.display =
-                        "none";
-
-                },
-                1600
-            );
-
-        }
+        }, 1300);
 
     }
-);
+
+
+    /* =========================
+       두 번째 NO
+    ========================= */
+
+    else if (noCount === 2) {
+
+        question.textContent = "真的吗？";
+        message.textContent = "(Think again!)";
+
+        setTimeout(function () {
+
+            question.textContent =
+                "Do you want to go out with me?";
+
+            message.textContent = "";
+
+        }, 1300);
+
+    }
+
+
+    /* =========================
+       세 번째 NO
+    ========================= */
+
+    else if (noCount === 3) {
+
+        /*
+           세 번째로 NO를 눌렀을 때
+           바로 NO REJECT 표시
+        */
+
+        question.textContent = "NO REJECT";
+
+        question.style.color = "#d00000";
+
+        message.textContent = "";
+
+
+        /*
+           NO REJECT가 표시되는 동안에는
+           아무것도 움직이지 않음
+        */
+
+        noButton.style.pointerEvents = "none";
+
+
+        /*
+           잠시 후 질문으로 돌아가고
+           이때 처음으로 NO가 사라짐
+        */
+
+        setTimeout(function () {
+
+            question.textContent =
+                "Do you want to go out with me?";
+
+            question.style.color =
+                "#d72832";
+
+            /*
+               ⭐ 세 번째 클릭이 끝난 후에만
+               NO 제거
+            */
+
+            noButton.style.display = "none";
+
+        }, 1600);
+
+    }
+
+});
 
 
 
