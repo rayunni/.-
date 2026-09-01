@@ -426,35 +426,73 @@ document.addEventListener(
 
 function moveNoButton() {
 
-    /*
-       NO가 이미 사라졌거나
-       잠긴 상태라면 아무것도 하지 않음
-    */
-
-    if (
-        noLocked ||
-        noButton.style.display === "none"
-    ) {
+    if (noLocked || noButton.style.display === "none") {
         return;
     }
 
-
     escapeCount++;
 
-
     /*
-       7번째 도망 시도에서는
-       화면에 멈춰있지 않고 바로 사라짐
+       마지막 도망:
+       버튼을 다른 곳으로 옮기지 않고
+       바로 사라지게 함
     */
 
     if (escapeCount >= 7) {
 
-        noButton.style.display =
-            "none";
+        noButton.style.transition = "opacity 0.2s ease";
+        noButton.style.opacity = "0";
+
+        setTimeout(function () {
+            noButton.style.display = "none";
+        }, 200);
 
         return;
-
     }
+
+
+    /*
+       아직 마지막 도망이 아니면
+       무조건 새로운 위치로 이동
+    */
+
+    const padding = 50;
+
+    const buttonWidth = noButton.offsetWidth;
+    const buttonHeight = noButton.offsetHeight;
+
+    const maxX =
+        window.innerWidth -
+        buttonWidth -
+        padding;
+
+    const maxY =
+        window.innerHeight -
+        buttonHeight -
+        padding;
+
+
+    const x =
+        padding +
+        Math.random() *
+        Math.max(1, maxX - padding * 2);
+
+
+    const y =
+        padding +
+        Math.random() *
+        Math.max(1, maxY - padding * 2);
+
+
+    noButton.style.position = "fixed";
+
+    noButton.style.left = x + "px";
+
+    noButton.style.top = y + "px";
+
+    noButton.style.opacity = "1";
+
+}
 
 
     const padding = 30;
