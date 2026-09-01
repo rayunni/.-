@@ -1,152 +1,778 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Valentine 💗</title>
+<title>For Khaiii 💗</title>
 
 <style>
-    * {
-        box-sizing: border-box;
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    width: 100%;
+    min-height: 100%;
+}
+
+body {
+    background: #f9e4e4;
+    overflow: hidden;
+    font-family: Georgia, serif;
+}
+
+/* 전체 화면 */
+#app {
+    width: 100%;
+    min-height: 100vh;
+    min-height: 100svh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 30px;
+}
+
+/* =========================
+   첫 번째 화면
+========================= */
+
+#introScreen {
+    width: 100%;
+    cursor: pointer;
+    user-select: none;
+}
+
+.introTitle {
+    color: #d72832;
+    font-family: Georgia, serif;
+    font-size: clamp(32px, 6vw, 58px);
+    font-weight: bold;
+    margin: 0 0 22px;
+}
+
+.introSubtitle {
+    color: #8a7774;
+    font-family: monospace;
+    font-size: clamp(16px, 3vw, 22px);
+    margin: 0;
+}
+
+.tapHint {
+    margin-top: 55px;
+    color: #d72832;
+    font-family: monospace;
+    font-size: clamp(16px, 3vw, 21px);
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 0.45;
     }
 
-    body {
-        margin: 0;
-        min-height: 100vh;
-        background: #f9e5e5;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-        font-family: Georgia, serif;
+    50% {
+        opacity: 1;
+    }
+}
+
+
+/* =========================
+   고백 화면
+========================= */
+
+#firstScreen {
+    display: none;
+    width: 100%;
+    max-width: 900px;
+}
+
+.photo {
+    width: min(380px, 75vw);
+    max-height: 45vh;
+    object-fit: contain;
+    border-radius: 12px;
+    margin-bottom: 35px;
+}
+
+.question {
+    color: #d72832;
+    font-family: monospace;
+    font-size: clamp(23px, 4vw, 36px);
+    margin: 0 0 32px;
+    font-weight: 500;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    min-height: 80px;
+}
+
+button {
+    border: none;
+    border-radius: 50px;
+    padding: 16px 38px;
+    font-size: 21px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.25s ease, opacity 0.25s ease;
+    touch-action: manipulation;
+}
+
+#yes {
+    background: #f2b1c4;
+    color: #96344f;
+}
+
+#no {
+    background: #fffafa;
+    color: #796967;
+}
+
+#message {
+    min-height: 35px;
+    margin-top: 20px;
+    font-family: monospace;
+    font-size: 20px;
+    font-weight: bold;
+    color: #d72832;
+}
+
+
+/* =========================
+   성공 화면
+========================= */
+
+#successScreen {
+    display: none;
+    width: 100%;
+    max-width: 900px;
+}
+
+#successText {
+    color: #d72832;
+    font-family: monospace;
+    font-size: clamp(28px, 6vw, 52px);
+    font-weight: bold;
+    margin-bottom: 25px;
+}
+
+#successPhoto {
+    width: min(500px, 80vw);
+    max-height: 60vh;
+    object-fit: contain;
+    border-radius: 15px;
+}
+
+
+/* =========================
+   화면 전환
+========================= */
+
+.fade {
+    animation: fadeIn 0.7s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.96);
     }
 
-    .container {
-        width: 90%;
-        max-width: 900px;
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+
+/* =========================
+   폭죽
+========================= */
+
+.firework {
+    position: fixed;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 10;
+    animation: explode 1.2s ease-out forwards;
+}
+
+@keyframes explode {
+    0% {
+        transform: translate(0, 0) scale(1);
+        opacity: 1;
     }
 
-    .hearts {
-        font-size: 70px;
-        margin-bottom: 55px;
+    100% {
+        transform:
+            translate(var(--x), var(--y))
+            scale(0.2);
+        opacity: 0;
     }
+}
 
-    h1 {
-        color: #d92828;
-        font-family: monospace;
-        font-size: 32px;
-        font-weight: 500;
-        margin-bottom: 35px;
-    }
-
-    .buttons {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 15px;
-        min-height: 80px;
-    }
-
-    button {
-        border: none;
-        border-radius: 40px;
-        padding: 17px 38px;
-        font-size: 22px;
-        font-weight: bold;
-        cursor: pointer;
-        transition: all 0.35s ease;
-    }
-
-    #yes {
-        background: #f3b2c4;
-        color: #96334f;
-    }
-
-    #no {
-        background: #fffafa;
-        color: #806d69;
-    }
-
-    #message {
-        margin-top: 25px;
-        color: #d92828;
-        font-size: 20px;
-        min-height: 30px;
-    }
 </style>
 </head>
 
+
 <body>
 
-<div class="container">
+<div id="app">
 
-    <div class="hearts">
-        🐰💕
-    </div>
+    <!-- =====================
+         INTRO SCREEN
+    ====================== -->
 
-    <h1 id="question">
-        Dear, Will you be my Valentine?
-    </h1>
+    <section id="introScreen">
 
-    <div class="buttons">
-        <button id="yes">Yes 💕</button>
-        <button id="no">No</button>
-    </div>
+        <h1 class="introTitle">
+            Hi Khaiii, I have something to tell you..
+        </h1>
 
-    <div id="message"></div>
+        <p class="introSubtitle">
+            Tap the screen!
+        </p>
+
+        <div class="tapHint">
+            ♡
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================
+         CONFESSION SCREEN
+    ====================== -->
+
+    <section id="firstScreen">
+
+        <img
+            src="first.jpg"
+            class="photo"
+            alt="A flower"
+        >
+
+        <h1 id="question" class="question">
+            Do you want to go out with me?
+        </h1>
+
+        <div class="buttons">
+
+            <button id="yes">
+                YES 💗
+            </button>
+
+            <button id="no">
+                NO
+            </button>
+
+        </div>
+
+        <div id="message"></div>
+
+    </section>
+
+
+
+    <!-- =====================
+         SUCCESS SCREEN
+    ====================== -->
+
+    <section id="successScreen">
+
+        <div id="successText">
+            waaaaaaaa ty love uuu 💗
+        </div>
+
+        <img
+            src="final.jpg"
+            id="successPhoto"
+            alt="Celebration"
+        >
+
+    </section>
 
 </div>
 
+
+
+<!-- 음악 -->
+
+<audio id="loveSong" preload="auto">
+    <source src="love-song.mp3" type="audio/mpeg">
+</audio>
+
+<audio id="fanfare" preload="auto">
+    <source src="fanfare.mp3" type="audio/mpeg">
+</audio>
+
+
+
 <script>
 
-const yes = document.getElementById("yes");
-const no = document.getElementById("no");
-const question = document.getElementById("question");
-const message = document.getElementById("message");
+const introScreen =
+    document.getElementById("introScreen");
 
-let count = 0;
+const firstScreen =
+    document.getElementById("firstScreen");
 
-no.addEventListener("click", () => {
+const successScreen =
+    document.getElementById("successScreen");
 
-    count++;
+const yesButton =
+    document.getElementById("yes");
 
-    if (count === 1) {
-        question.textContent = "Are you sure? 🥺";
-        message.textContent = "Think again!";
+const noButton =
+    document.getElementById("no");
+
+const question =
+    document.getElementById("question");
+
+const message =
+    document.getElementById("message");
+
+const loveSong =
+    document.getElementById("loveSong");
+
+const fanfare =
+    document.getElementById("fanfare");
+
+
+let noCount = 0;
+let desktopEscapes = 0;
+let started = false;
+
+
+
+/* ==================================
+   첫 화면 → 고백 화면
+================================== */
+
+function startExperience() {
+
+    if (started) return;
+
+    started = true;
+
+    /* 첫 음악 시작 */
+    loveSong.volume = 0.65;
+
+    loveSong.play().catch(() => {
+        console.log("Audio needs user interaction.");
+    });
+
+
+    /* 첫 화면 숨기기 */
+    introScreen.style.display = "none";
+
+
+    /* 고백 화면 보여주기 */
+    firstScreen.style.display = "block";
+
+    firstScreen.classList.add("fade");
+
+}
+
+
+/* 화면 어디든 클릭 / 터치 */
+
+introScreen.addEventListener(
+    "pointerdown",
+    startExperience
+);
+
+
+
+/* ==================================
+   PC - NO 도망가기
+================================== */
+
+function moveNoButton() {
+
+    desktopEscapes++;
+
+
+    const padding = 30;
+
+    const maxX =
+        window.innerWidth -
+        noButton.offsetWidth -
+        padding;
+
+    const maxY =
+        window.innerHeight -
+        noButton.offsetHeight -
+        padding;
+
+
+    const x =
+        Math.max(
+            padding,
+            Math.random() * maxX
+        );
+
+    const y =
+        Math.max(
+            padding,
+            Math.random() * maxY
+        );
+
+
+    noButton.style.position = "fixed";
+
+    noButton.style.left =
+        x + "px";
+
+    noButton.style.top =
+        y + "px";
+
+
+    /* 여러 번 도망가면 NO REJECT */
+
+    if (desktopEscapes >= 7) {
+
+        message.textContent =
+            "NO REJECT ❤️";
+
+
+        setTimeout(() => {
+
+            noButton.style.display =
+                "none";
+
+            message.textContent = "";
+
+        }, 900);
+
     }
 
-    else if (count === 2) {
-        question.textContent = "Really? 💔";
-        message.textContent = "Please choose again!";
+}
+
+
+/* PC에서 커서가 NO에 닿으면 도망 */
+
+noButton.addEventListener(
+    "mouseenter",
+    () => {
+
+        const isDesktop =
+            window.matchMedia(
+                "(hover: hover) and (pointer: fine)"
+            ).matches;
+
+
+        if (isDesktop) {
+            moveNoButton();
+        }
+
+    }
+);
+
+
+
+/* ==================================
+   모바일 - NO
+================================== */
+
+noButton.addEventListener(
+    "click",
+    () => {
+
+        const isMobile =
+            window.matchMedia(
+                "(pointer: coarse)"
+            ).matches;
+
+
+        /* PC에서 혹시 클릭했을 경우 */
+
+        if (!isMobile) {
+
+            moveNoButton();
+
+            return;
+
+        }
+
+
+        noCount++;
+
+
+        /* 첫 번째 NO */
+
+        if (noCount === 1) {
+
+            question.textContent =
+                "Are u sure?";
+
+            message.textContent =
+                "(Think again!)";
+
+
+            setTimeout(() => {
+
+                question.textContent =
+                    "Do you want to go out with me?";
+
+                message.textContent = "";
+
+            }, 1200);
+
+        }
+
+
+        /* 두 번째 NO */
+
+        else if (noCount === 2) {
+
+            question.textContent =
+                "真的吗？";
+
+            message.textContent =
+                "(Think again!)";
+
+
+            setTimeout(() => {
+
+                question.textContent =
+                    "Do you want to go out with me?";
+
+                message.textContent = "";
+
+            }, 1200);
+
+        }
+
+
+        /* 세 번째 NO */
+
+        else {
+
+            question.textContent =
+                "NO REJECT";
+
+            message.textContent = "";
+
+            question.style.color =
+                "#d00000";
+
+
+            setTimeout(() => {
+
+                question.textContent =
+                    "Do you want to go out with me?";
+
+                question.style.color =
+                    "#d72832";
+
+                noButton.style.display =
+                    "none";
+
+            }, 1300);
+
+        }
+
+    }
+);
+
+
+
+/* ==================================
+   YES
+================================== */
+
+yesButton.addEventListener(
+    "click",
+    () => {
+
+        /*
+        첫 번째 노래 정지
+        */
+
+        loveSong.pause();
+
+        loveSong.currentTime = 0;
+
+
+        /*
+        고백 화면 숨기기
+        */
+
+        firstScreen.style.display =
+            "none";
+
+
+        /*
+        성공 화면
+        */
+
+        successScreen.style.display =
+            "block";
+
+        successScreen.classList.add(
+            "fade"
+        );
+
+
+        /*
+        축하 음악
+        */
+
+        fanfare.currentTime = 0;
+
+        fanfare.volume = 0.85;
+
+        fanfare.play().catch(() => {});
+
+
+        /*
+        폭죽
+        */
+
+        createFireworks();
+
+    }
+);
+
+
+
+/* ==================================
+   폭죽
+================================== */
+
+function createFirework(x, y) {
+
+    const particleCount = 32;
+
+
+    for (
+        let i = 0;
+        i < particleCount;
+        i++
+    ) {
+
+        const particle =
+            document.createElement("div");
+
+
+        particle.className =
+            "firework";
+
+
+        particle.style.left =
+            x + "px";
+
+
+        particle.style.top =
+            y + "px";
+
+
+        const angle =
+            (Math.PI * 2 * i) /
+            particleCount;
+
+
+        const distance =
+            60 +
+            Math.random() * 130;
+
+
+        const moveX =
+            Math.cos(angle) *
+            distance;
+
+
+        const moveY =
+            Math.sin(angle) *
+            distance;
+
+
+        particle.style.setProperty(
+            "--x",
+            moveX + "px"
+        );
+
+
+        particle.style.setProperty(
+            "--y",
+            moveY + "px"
+        );
+
+
+        document.body.appendChild(
+            particle
+        );
+
+
+        setTimeout(() => {
+
+            particle.remove();
+
+        }, 1300);
+
     }
 
-    else if (count === 3) {
-        question.textContent = "Are you REALLY sure?";
-        message.textContent = "Try again... 💗";
-    }
+}
 
-    else {
-        question.textContent = "Again! 💕";
-        message.textContent = "You can't escape hehe";
 
-        const scale = Math.max(0.15, 1 - (count - 3) * 0.15);
 
-        no.style.transform = `scale(${scale})`;
-        yes.style.transform = `scale(${Math.min(1.5, 1 + (count - 3) * 0.08)})`;
-    }
+function createFireworks() {
 
-});
+    const positions = [
 
-yes.addEventListener("click", () => {
+        [
+            window.innerWidth * 0.2,
+            window.innerHeight * 0.25
+        ],
 
-    question.textContent = "YAY!! 💕";
-    message.textContent = "I knew you would say yes! 🥰";
+        [
+            window.innerWidth * 0.8,
+            window.innerHeight * 0.25
+        ],
 
-    no.style.display = "none";
-    yes.textContent = "💕💕💕";
+        [
+            window.innerWidth * 0.5,
+            window.innerHeight * 0.18
+        ],
 
-});
+        [
+            window.innerWidth * 0.3,
+            window.innerHeight * 0.45
+        ],
+
+        [
+            window.innerWidth * 0.7,
+            window.innerHeight * 0.45
+        ]
+
+    ];
+
+
+    positions.forEach(
+        (position, index) => {
+
+            setTimeout(() => {
+
+                createFirework(
+                    position[0],
+                    position[1]
+                );
+
+            }, index * 250);
+
+        }
+    );
+
+}
 
 </script>
 
