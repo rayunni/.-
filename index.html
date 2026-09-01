@@ -2,206 +2,58 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>For Khaiii 💗</title>
 
 <style>
-* { box-sizing: border-box; }
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%}
+body{background:#f9e4e4;overflow:hidden;font-family:Georgia,serif}
+#app{width:100%;height:100vh;display:flex;justify-content:center;align-items:center;text-align:center;padding:25px}
 
-html, body {
-    margin: 0;
-    width: 100%;
-    height: 100%;
+#introScreen{width:100%;cursor:pointer;user-select:none}
+.introTitle{margin:0;color:#d72832;font-size:clamp(30px,6vw,58px);font-weight:bold}
+.introSubtitle{margin-top:25px;color:#806d69;font-family:monospace;font-size:clamp(17px,3vw,23px)}
+.tapHint{margin-top:50px;color:#d72832;font-size:30px;animation:pulse 1.4s infinite}
+
+@keyframes pulse{
+0%,100%{opacity:.4;transform:scale(1)}
+50%{opacity:1;transform:scale(1.15)}
 }
 
-body {
-    background: #f9e4e4;
-    overflow: hidden;
-    font-family: Georgia, serif;
+#firstScreen{display:none;width:100%;max-width:900px}
+.firstPhoto{width:min(400px,75vw);max-height:48vh;object-fit:contain;margin-bottom:35px;border-radius:12px}
+
+#question{margin:0 0 32px;color:#d72832;font-family:monospace;font-size:clamp(23px,4vw,36px);font-weight:500}
+
+.buttons{display:flex;justify-content:center;align-items:center;gap:15px;min-height:80px}
+
+button{border:0;border-radius:50px;padding:16px 38px;font-size:21px;font-weight:bold;cursor:pointer;touch-action:manipulation}
+
+#yes{background:#f2b1c4;color:#96344f}
+#no{background:#fffafa;color:#796967;z-index:30}
+#message{min-height:35px;margin-top:20px;color:#d72832;font-family:monospace;font-size:19px;font-weight:bold}
+
+#successScreen{display:none;width:100%;max-width:900px;position:relative;z-index:5}
+#successText{margin-bottom:25px;color:#d72832;font-family:monospace;font-size:clamp(28px,6vw,55px);font-weight:bold}
+#successPhoto{width:min(500px,82vw);max-height:60vh;object-fit:contain;border-radius:15px}
+
+.fade{animation:fadeIn .7s ease}
+@keyframes fadeIn{
+from{opacity:0;transform:scale(.94)}
+to{opacity:1;transform:scale(1)}
 }
 
-#app {
-    width: 100%;
-    height: 100vh;
-    height: 100svh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding: 25px;
+.firework{
+position:fixed;width:7px;height:7px;border-radius:50%;
+pointer-events:none;z-index:100;
+animation:explode 1.5s cubic-bezier(.1,.7,.2,1) forwards
 }
 
-/* 첫 화면 */
-#introScreen {
-    width: 100%;
-    cursor: pointer;
-    user-select: none;
-}
-
-.introTitle {
-    margin: 0;
-    color: #d72832;
-    font-size: clamp(30px, 6vw, 58px);
-    font-weight: bold;
-}
-
-.introSubtitle {
-    margin-top: 25px;
-    color: #806d69;
-    font-family: monospace;
-    font-size: clamp(17px, 3vw, 23px);
-}
-
-.tapHint {
-    margin-top: 50px;
-    color: #d72832;
-    font-size: 30px;
-    animation: pulse 1.4s infinite;
-}
-
-@keyframes pulse {
-    0%, 100% {
-        opacity: .4;
-        transform: scale(1);
-    }
-
-    50% {
-        opacity: 1;
-        transform: scale(1.15);
-    }
-}
-
-/* 고백 화면 */
-#firstScreen {
-    display: none;
-    width: 100%;
-    max-width: 900px;
-}
-
-.firstPhoto {
-    width: min(400px, 75vw);
-    max-height: 48vh;
-    object-fit: contain;
-    margin-bottom: 35px;
-    border-radius: 12px;
-}
-
-#question {
-    margin: 0 0 32px;
-    color: #d72832;
-    font-family: monospace;
-    font-size: clamp(23px, 4vw, 36px);
-    font-weight: 500;
-    transition: color .2s ease;
-}
-
-.buttons {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 15px;
-    min-height: 80px;
-}
-
-button {
-    border: none;
-    border-radius: 50px;
-    padding: 16px 38px;
-    font-size: 21px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: transform .25s ease, opacity .25s ease;
-    touch-action: manipulation;
-}
-
-#yes {
-    background: #f2b1c4;
-    color: #96344f;
-}
-
-#no {
-    background: #fffafa;
-    color: #796967;
-    z-index: 30;
-}
-
-#message {
-    min-height: 35px;
-    margin-top: 20px;
-    color: #d72832;
-    font-family: monospace;
-    font-size: 19px;
-    font-weight: bold;
-}
-
-/* 성공 화면 */
-#successScreen {
-    display: none;
-    width: 100%;
-    max-width: 900px;
-    position: relative;
-    z-index: 5;
-}
-
-#successText {
-    margin-bottom: 25px;
-    color: #d72832;
-    font-family: monospace;
-    font-size: clamp(28px, 6vw, 55px);
-    font-weight: bold;
-}
-
-#successPhoto {
-    width: min(500px, 82vw);
-    max-height: 60vh;
-    object-fit: contain;
-    border-radius: 15px;
-}
-
-.fade {
-    animation: fadeIn .7s ease;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: .0;
-        transform: scale(.94);
-    }
-
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
-
-/* 폭죽 */
-.firework {
-    position: fixed;
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 100;
-    animation:
-        fireworkMove 1.5s
-        cubic-bezier(.1,.7,.2,1)
-        forwards;
-}
-
-@keyframes fireworkMove {
-    0% {
-        transform: translate(0,0) scale(1.5);
-        opacity: 1;
-    }
-
-    65% {
-        opacity: 1;
-    }
-
-    100% {
-        transform: translate(var(--x),var(--y)) scale(.1);
-        opacity: 0;
-    }
+@keyframes explode{
+0%{transform:translate(0,0) scale(1.5);opacity:1}
+65%{opacity:1}
+100%{transform:translate(var(--x),var(--y)) scale(.1);opacity:0}
 }
 </style>
 </head>
@@ -210,815 +62,375 @@ button {
 
 <div id="app">
 
-    <!-- 첫 번째 화면 -->
-    <section id="introScreen">
+<section id="introScreen">
+<h1 class="introTitle">Hi Khaiii, I have something to tell you..</h1>
+<p class="introSubtitle">Tap the screen!</p>
+<div class="tapHint">♡</div>
+</section>
 
-        <h1 class="introTitle">
-            Hi Khaiii, I have something to tell you..
-        </h1>
+<section id="firstScreen">
 
-        <p class="introSubtitle">
-            Tap the screen!
-        </p>
+<img src="first.jpg" class="firstPhoto" alt="Flower">
 
-        <div class="tapHint">
-            ♡
-        </div>
+<h1 id="question">Do you want to go out with me?</h1>
 
-    </section>
+<div class="buttons">
+<button id="yes">YES 💗</button>
+<button id="no">NO</button>
+</div>
 
+<div id="message"></div>
 
-    <!-- 고백 화면 -->
-    <section id="firstScreen">
+</section>
 
-        <img
-            src="first.jpg"
-            class="firstPhoto"
-            alt="Flower"
-        >
+<section id="successScreen">
 
-        <h1 id="question">
-            Do you want to go out with me?
-        </h1>
+<div id="successText">waaaaaaaa ty love uuu 💗</div>
 
-        <div class="buttons">
+<img src="final.jpg" id="successPhoto" alt="Celebration">
 
-            <button id="yes">
-                YES 💗
-            </button>
-
-            <button id="no">
-                NO
-            </button>
-
-        </div>
-
-        <div id="message"></div>
-
-    </section>
-
-
-    <!-- 성공 화면 -->
-    <section id="successScreen">
-
-        <div id="successText">
-            waaaaaaaa ty love uuu 💗
-        </div>
-
-        <img
-            src="final.jpg"
-            id="successPhoto"
-            alt="Celebration"
-        >
-
-    </section>
+</section>
 
 </div>
 
-
-<!-- 음악 -->
-<audio id="loveSong" preload="auto" playsinline>
-    <source src="love-song.mp3" type="audio/mpeg">
+<audio id="loveSong" preload="auto">
+<source src="love-song.mp3" type="audio/mpeg">
 </audio>
 
-<audio id="fanfare" preload="auto" playsinline>
-    <source src="fanfare.mp3" type="audio/mpeg">
+<audio id="fanfare" preload="auto">
+<source src="fanfare.mp3" type="audio/mpeg">
 </audio>
-
 
 <script>
 
-const introScreen =
-    document.getElementById("introScreen");
+const introScreen=document.getElementById("introScreen");
+const firstScreen=document.getElementById("firstScreen");
+const successScreen=document.getElementById("successScreen");
 
-const firstScreen =
-    document.getElementById("firstScreen");
+const yesButton=document.getElementById("yes");
+const noButton=document.getElementById("no");
 
-const successScreen =
-    document.getElementById("successScreen");
+const question=document.getElementById("question");
+const message=document.getElementById("message");
 
-const yesButton =
-    document.getElementById("yes");
+const loveSong=document.getElementById("loveSong");
+const fanfare=document.getElementById("fanfare");
 
-const noButton =
-    document.getElementById("no");
-
-const question =
-    document.getElementById("question");
-
-const message =
-    document.getElementById("message");
-
-const loveSong =
-    document.getElementById("loveSong");
-
-const fanfare =
-    document.getElementById("fanfare");
+let started=false;
+let noCount=0;
+let escapeCount=0;
+let noLocked=false;
 
 
-let started = false;
-let noCount = 0;
-let escapeCount = 0;
-let noLocked = false;
+/* 첫 화면 */
+
+function startExperience(){
+
+if(started)return;
+
+started=true;
+
+loveSong.volume=.65;
+
+loveSong.currentTime=0;
+
+loveSong.play().catch(function(error){
+console.log("Love song error:",error);
+});
+
+introScreen.style.display="none";
+
+firstScreen.style.display="block";
+
+firstScreen.classList.add("fade");
+
+}
+
+introScreen.addEventListener("click",startExperience);
 
 
-/* ==========================================
-   첫 화면 → 고백 화면
-========================================== */
 
-async function playLoveSong() {
+/* PC NO 도망 */
 
-    try {
+function moveNoButton(){
 
-        loveSong.volume = 0.65;
-        loveSong.currentTime = 0;
+if(noLocked)return;
 
-        await loveSong.play();
+if(noButton.style.display==="none")return;
 
-        console.log("Love song started!");
+escapeCount++;
 
-    } catch (error) {
+if(escapeCount>=7){
 
-        console.log(
-            "Love song could not start:",
-            error
-        );
+noButton.style.opacity="0";
 
-    }
+setTimeout(function(){
+
+noButton.style.display="none";
+
+},200);
+
+return;
+
+}
+
+const padding=35;
+
+const width=noButton.offsetWidth;
+
+const height=noButton.offsetHeight;
+
+const maxX=Math.max(
+padding,
+window.innerWidth-width-padding
+);
+
+const maxY=Math.max(
+padding,
+window.innerHeight-height-padding
+);
+
+const x=padding+
+Math.random()*Math.max(1,maxX-padding);
+
+const y=padding+
+Math.random()*Math.max(1,maxY-padding);
+
+noButton.style.position="fixed";
+
+noButton.style.left=x+"px";
+
+noButton.style.top=y+"px";
+
+noButton.style.opacity="1";
 
 }
 
 
-function startExperience() {
+noButton.addEventListener("mouseenter",function(){
 
-    if (started) {
-        return;
-    }
+if(noLocked)return;
 
-    started = true;
+const desktop=window.matchMedia(
+"(hover:hover) and (pointer:fine)"
+).matches;
 
-    /*
-       사용자가 직접 화면을 누른 순간에
-       음악 재생
-    */
+if(desktop)moveNoButton();
 
-    playLoveSong();
-
-    /*
-       첫 화면 숨기기
-    */
-
-    introScreen.style.display =
-        "none";
-
-    /*
-       고백 화면 보여주기
-    */
-
-    firstScreen.style.display =
-        "block";
-
-    firstScreen.classList.add(
-        "fade"
-    );
-
-}
-
-
-/*
-   첫 화면을 클릭/터치하면 시작
-*/
-
-introScreen.addEventListener(
-    "pointerdown",
-    startExperience,
-    { once: true }
-);
-
-
-/*
-   혹시 첫 재생이 막혔으면
-   고백 화면을 클릭했을 때 다시 시도
-*/
-
-document.addEventListener(
-    "pointerdown",
-    () => {
-
-        if (
-            started &&
-            loveSong.paused
-        ) {
-
-            loveSong.play()
-                .catch(() => {});
-
-        }
-
-    }
-);
+});
 
 
 
-/* ==========================================
-   PC - NO 도망가기
-========================================== */
+/* NO 클릭 */
 
-function moveNoButton() {
+noButton.addEventListener("click",function(){
 
-    if (noLocked || noButton.style.display === "none") {
-        return;
-    }
+if(noLocked)return;
 
-    escapeCount++;
-
-    /*
-       마지막 도망:
-       버튼을 다른 곳으로 옮기지 않고
-       바로 사라지게 함
-    */
-
-    if (escapeCount >= 7) {
-
-        noButton.style.transition = "opacity 0.2s ease";
-        noButton.style.opacity = "0";
-
-        setTimeout(function () {
-            noButton.style.display = "none";
-        }, 200);
-
-        return;
-    }
+noCount++;
 
 
-    /*
-       아직 마지막 도망이 아니면
-       무조건 새로운 위치로 이동
-    */
+if(noCount===1){
 
-    const padding = 50;
+question.textContent="Are u sure?";
 
-    const buttonWidth = noButton.offsetWidth;
-    const buttonHeight = noButton.offsetHeight;
+message.textContent="(Think again!)";
 
-    const maxX =
-        window.innerWidth -
-        buttonWidth -
-        padding;
+setTimeout(function(){
 
-    const maxY =
-        window.innerHeight -
-        buttonHeight -
-        padding;
+question.textContent=
+"Do you want to go out with me?";
 
+message.textContent="";
 
-    const x =
-        padding +
-        Math.random() *
-        Math.max(1, maxX - padding * 2);
-
-
-    const y =
-        padding +
-        Math.random() *
-        Math.max(1, maxY - padding * 2);
-
-
-    noButton.style.position = "fixed";
-
-    noButton.style.left = x + "px";
-
-    noButton.style.top = y + "px";
-
-    noButton.style.opacity = "1";
+},1300);
 
 }
 
 
-    const padding = 30;
+else if(noCount===2){
 
+question.textContent="真的吗？";
 
-    const maxX =
-        Math.max(
-            padding,
-            window.innerWidth -
-            noButton.offsetWidth -
-            padding
-        );
+message.textContent="(Think again!)";
 
+setTimeout(function(){
 
-    const maxY =
-        Math.max(
-            padding,
-            window.innerHeight -
-            noButton.offsetHeight -
-            padding
-        );
+question.textContent=
+"Do you want to go out with me?";
 
+message.textContent="";
 
-    const x =
-        padding +
-        Math.random() *
-        Math.max(
-            1,
-            maxX - padding
-        );
-
-
-    const y =
-        padding +
-        Math.random() *
-        Math.max(
-            1,
-            maxY - padding
-        );
-
-
-    noButton.style.position =
-        "fixed";
-
-    noButton.style.left =
-        x + "px";
-
-    noButton.style.top =
-        y + "px";
+},1300);
 
 }
 
 
-/*
-   PC에서 NO에 마우스를 가져가면 도망
-*/
+else if(noCount===3){
 
-noButton.addEventListener(
-    "mouseenter",
-    () => {
+noLocked=true;
 
-        if (noLocked) {
-            return;
-        }
+question.textContent="NO REJECT";
+
+question.style.color="#d00000";
+
+message.textContent="";
+
+noButton.style.pointerEvents="none";
+
+setTimeout(function(){
+
+question.textContent=
+"Do you want to go out with me?";
+
+question.style.color="#d72832";
+
+noButton.style.display="none";
+
+},1600);
+
+}
+
+});
 
 
-        const isDesktop =
-            window.matchMedia(
-                "(hover: hover) and (pointer: fine)"
-            ).matches;
+
+/* YES */
+
+yesButton.addEventListener("click",function(){
+
+loveSong.pause();
+
+loveSong.currentTime=0;
+
+firstScreen.style.display="none";
+
+successScreen.style.display="block";
+
+successScreen.classList.add("fade");
+
+fanfare.pause();
+
+fanfare.currentTime=0;
+
+fanfare.volume=.9;
+
+fanfare.play().catch(function(error){
+console.log("Fanfare error:",error);
+});
+
+startFireworks();
+
+});
 
 
-        if (isDesktop) {
 
-            moveNoButton();
+/* 폭죽 */
 
-        }
+function createFirework(x,y){
 
-    }
+const count=45;
+
+const colors=[
+"#ff5c8a",
+"#ffcc66",
+"#ff6b6b",
+"#8fd3ff",
+"#c58cff",
+"#ffffff"
+];
+
+for(let i=0;i<count;i++){
+
+const particle=document.createElement("div");
+
+particle.className="firework";
+
+particle.style.left=x+"px";
+
+particle.style.top=y+"px";
+
+const angle=Math.PI*2*i/count;
+
+const distance=80+Math.random()*170;
+
+particle.style.setProperty(
+"--x",
+Math.cos(angle)*distance+"px"
 );
 
-
-
-/* ==========================================
-   NO 클릭
-========================================== */
-
-noButton.addEventListener(
-    "click",
-    () => {
-
-        /*
-           NO가 잠겼으면 아무것도 하지 않음
-        */
-
-        if (noLocked) {
-            return;
-        }
-
-
-        noCount++;
-
-
-        /* =========================
-           첫 번째 NO
-        ========================= */
-
-        if (noCount === 1) {
-
-            question.textContent =
-                "Are u sure?";
-
-            message.textContent =
-                "(Think again!)";
-
-
-            setTimeout(
-                () => {
-
-                    if (noCount === 1) {
-
-                        question.textContent =
-                            "Do you want to go out with me?";
-
-                        message.textContent =
-                            "";
-
-                    }
-
-                },
-                1300
-            );
-
-        }
-
-
-        /* =========================
-           두 번째 NO
-        ========================= */
-
-        else if (noCount === 2) {
-
-            question.textContent =
-                "真的吗？";
-
-            message.textContent =
-                "(Think again!)";
-
-
-            setTimeout(
-                () => {
-
-                    if (noCount === 2) {
-
-                        question.textContent =
-                            "Do you want to go out with me?";
-
-                        message.textContent =
-                            "";
-
-                    }
-
-                },
-                1300
-            );
-
-        }
-
-
-        /* =========================
-           세 번째 NO
-        ========================= */
-
-        else if (noCount === 3) {
-
-            /*
-               이제 NO를 잠금
-            */
-
-            noLocked = true;
-
-
-            question.textContent =
-                "NO REJECT";
-
-            question.style.color =
-                "#d00000";
-
-            message.textContent =
-                "";
-
-
-            /*
-               NO REJECT가 뜬 동안
-               NO가 움직이지 않게 함
-            */
-
-            noButton.style.pointerEvents =
-                "none";
-
-
-            /*
-               1.6초 후 NO 제거
-            */
-
-            setTimeout(
-                () => {
-
-                    question.textContent =
-                        "Do you want to go out with me?";
-
-                    question.style.color =
-                        "#d72832";
-
-
-                    /*
-                       ⭐ 세 번째로 실제 NO를 누른
-                       뒤에만 NO가 사라짐
-                    */
-
-                    noButton.style.display =
-                        "none";
-
-                },
-                1600
-            );
-
-        }
-
-    }
+particle.style.setProperty(
+"--y",
+Math.sin(angle)*distance+"px"
 );
 
+particle.style.background=
+colors[Math.floor(Math.random()*colors.length)];
 
+document.body.appendChild(particle);
 
-/* ==========================================
-   YES
-========================================== */
+setTimeout(function(){
+particle.remove();
+},1500);
 
-yesButton.addEventListener(
-    "click",
-    async () => {
-
-        /*
-           첫 번째 노래 정지
-        */
-
-        loveSong.pause();
-
-        loveSong.currentTime =
-            0;
-
-
-        /*
-           고백 화면 숨기기
-        */
-
-        firstScreen.style.display =
-            "none";
-
-
-        /*
-           성공 화면
-        */
-
-        successScreen.style.display =
-            "block";
-
-        successScreen.classList.add(
-            "fade"
-        );
-
-
-        /*
-           축하 음악 시작
-        */
-
-        fanfare.pause();
-
-        fanfare.currentTime =
-            0;
-
-        fanfare.volume =
-            0.9;
-
-
-        try {
-
-            await fanfare.play();
-
-        } catch (error) {
-
-            console.log(
-                "Fanfare could not start:",
-                error
-            );
-
-        }
-
-
-        /*
-           폭죽
-        */
-
-        startFireworks();
-
-    }
-);
-
-
-
-/* ==========================================
-   폭죽 하나
-========================================== */
-
-function createFirework(
-    centerX,
-    centerY
-) {
-
-    const particleCount =
-        45;
-
-
-    const colors = [
-
-        "#ff5c8a",
-        "#ffcc66",
-        "#ff6b6b",
-        "#8fd3ff",
-        "#c58cff",
-        "#ffffff"
-
-    ];
-
-
-    for (
-        let i = 0;
-        i < particleCount;
-        i++
-    ) {
-
-        const particle =
-            document.createElement(
-                "div"
-            );
-
-
-        particle.className =
-            "firework";
-
-
-        particle.style.left =
-            centerX + "px";
-
-
-        particle.style.top =
-            centerY + "px";
-
-
-        const angle =
-            (
-                Math.PI * 2 * i
-            ) /
-            particleCount;
-
-
-        const distance =
-            80 +
-            Math.random() *
-            170;
-
-
-        particle.style.setProperty(
-            "--x",
-            Math.cos(angle) *
-            distance +
-            "px"
-        );
-
-
-        particle.style.setProperty(
-            "--y",
-            Math.sin(angle) *
-            distance +
-            "px"
-        );
-
-
-        particle.style.background =
-            colors[
-                Math.floor(
-                    Math.random() *
-                    colors.length
-                )
-            ];
-
-
-        document.body.appendChild(
-            particle
-        );
-
-
-        setTimeout(
-            () => {
-
-                particle.remove();
-
-            },
-            1500
-        );
-
-    }
+}
 
 }
 
 
+function startFireworks(){
 
-/* ==========================================
-   폭죽 여러 번
-========================================== */
+const positions=[
 
-function startFireworks() {
+[innerWidth*.18,innerHeight*.25],
+[innerWidth*.82,innerHeight*.25],
+[innerWidth*.50,innerHeight*.18],
+[innerWidth*.28,innerHeight*.48],
+[innerWidth*.72,innerHeight*.48],
+[innerWidth*.50,innerHeight*.38]
 
-    const positions = [
+];
 
-        [
-            window.innerWidth * 0.18,
-            window.innerHeight * 0.25
-        ],
+positions.forEach(function(position,index){
 
-        [
-            window.innerWidth * 0.82,
-            window.innerHeight * 0.25
-        ],
+setTimeout(function(){
 
-        [
-            window.innerWidth * 0.50,
-            window.innerHeight * 0.18
-        ],
+createFirework(
+position[0],
+position[1]
+);
 
-        [
-            window.innerWidth * 0.28,
-            window.innerHeight * 0.48
-        ],
+},index*280);
 
-        [
-            window.innerWidth * 0.72,
-            window.innerHeight * 0.48
-        ],
-
-        [
-            window.innerWidth * 0.50,
-            window.innerHeight * 0.38
-        ]
-
-    ];
+});
 
 
-    /*
-       첫 번째 폭죽
-    */
+setTimeout(function(){
 
-    positions.forEach(
-        (position, index) => {
+positions.forEach(function(position,index){
 
-            setTimeout(
-                () => {
+setTimeout(function(){
 
-                    createFirework(
-                        position[0],
-                        position[1]
-                    );
+createFirework(
+position[0],
+position[1]
+);
 
-                },
-                index * 280
-            );
+},index*180);
 
-        }
-    );
+});
+
+},2300);
 
 
-    /*
-       두 번째 폭죽
-    */
+setTimeout(function(){
 
-    setTimeout(
-        () => {
+createFirework(
+innerWidth*.5,
+innerHeight*.25
+);
 
-            positions.forEach(
-                (position, index) => {
-
-                    setTimeout(
-                        () => {
-
-                            createFirework(
-                                position[0],
-                                position[1]
-                            );
-
-                        },
-                        index * 180
-                    );
-
-                }
-            );
-
-        },
-        2300
-    );
-
-
-    /*
-       마지막 대형 폭죽
-    */
-
-    setTimeout(
-        () => {
-
-            createFirework(
-                window.innerWidth * 0.5,
-                window.innerHeight * 0.25
-            );
-
-        },
-        4200
-    );
+},4200);
 
 }
 
