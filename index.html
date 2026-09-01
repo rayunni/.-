@@ -77,7 +77,6 @@ body {
 }
 
 @keyframes pulse {
-
     0%, 100% {
         opacity: 0.4;
         transform: scale(1);
@@ -122,6 +121,8 @@ body {
     font-size: clamp(23px, 4vw, 36px);
 
     font-weight: 500;
+
+    transition: color 0.2s ease;
 }
 
 .buttons {
@@ -150,6 +151,8 @@ button {
     transition:
         transform 0.25s ease,
         opacity 0.25s ease;
+
+    touch-action: manipulation;
 }
 
 #yes {
@@ -160,6 +163,8 @@ button {
 #no {
     background: #fffafa;
     color: #796967;
+
+    z-index: 30;
 }
 
 #message {
@@ -188,6 +193,7 @@ button {
     max-width: 900px;
 
     position: relative;
+
     z-index: 5;
 }
 
@@ -223,7 +229,6 @@ button {
 }
 
 @keyframes fadeIn {
-
     from {
         opacity: 0;
         transform: scale(0.94);
@@ -250,10 +255,10 @@ button {
 
     pointer-events: none;
 
-    z-index: 20;
+    z-index: 100;
 
     animation:
-        fireworkMove 1.4s
+        fireworkMove 1.5s
         cubic-bezier(0.1, 0.7, 0.2, 1)
         forwards;
 }
@@ -263,12 +268,12 @@ button {
     0% {
         transform:
             translate(0, 0)
-            scale(1.4);
+            scale(1.5);
 
         opacity: 1;
     }
 
-    70% {
+    65% {
         opacity: 1;
     }
 
@@ -289,9 +294,8 @@ button {
 
 <div id="app">
 
-
     <!-- =====================
-         INTRO
+         첫 번째 화면
     ====================== -->
 
     <section id="introScreen">
@@ -311,9 +315,8 @@ button {
     </section>
 
 
-
     <!-- =====================
-         CONFESSION
+         고백 화면
     ====================== -->
 
     <section id="firstScreen">
@@ -328,7 +331,6 @@ button {
             Do you want to go out with me?
         </h1>
 
-
         <div class="buttons">
 
             <button id="yes">
@@ -341,15 +343,13 @@ button {
 
         </div>
 
-
         <div id="message"></div>
 
     </section>
 
 
-
     <!-- =====================
-         SUCCESS
+         성공 화면
     ====================== -->
 
     <section id="successScreen">
@@ -370,13 +370,12 @@ button {
 
 
 <!-- =====================
-     AUDIO
+     음악
 ====================== -->
 
 <audio
     id="loveSong"
     preload="auto"
-    playsinline
 >
     <source
         src="love-song.mp3"
@@ -388,14 +387,12 @@ button {
 <audio
     id="fanfare"
     preload="auto"
-    playsinline
 >
     <source
         src="fanfare.mp3"
         type="audio/mpeg"
     >
 </audio>
-
 
 
 <script>
@@ -436,45 +433,70 @@ let escapeCount = 0;
 
 
 /* ==========================================
-   첫 화면 클릭
+   첫 화면
 ========================================== */
 
-let started = false;
-let musicStarted = false;
+function startExperience() {
 
-async function startExperience() {
-
-    // 이미 화면을 넘어갔다면 다시 실행하지 않음
-    if (started) return;
-
-    // 음악 재생 시도
-    try {
-        loveSong.volume = 0.65;
-        loveSong.currentTime = 0;
-
-        await loveSong.play();
-
-        musicStarted = true;
-
-    } catch (error) {
-        console.log("Music play blocked:", error);
-        musicStarted = false;
+    if (started) {
+        return;
     }
 
-    // 화면 전환
     started = true;
 
-    introScreen.style.display = "none";
 
-    firstScreen.style.display = "block";
+    /*
+       사용자가 직접 화면을 클릭했기 때문에
+       여기에서 음악을 재생
+    */
 
-    firstScreen.classList.add("fade");
+    loveSong.volume = 0.65;
+
+    loveSong.currentTime = 0;
+
+
+    const music =
+        loveSong.play();
+
+
+    /*
+       음악 재생에 성공/실패하더라도
+       화면은 정상적으로 넘어감
+    */
+
+    if (music !== undefined) {
+
+        music.catch((error) => {
+
+            console.log(
+                "Love song could not start:",
+                error
+            );
+
+        });
+
+    }
+
+
+    /* 화면 전환 */
+
+    introScreen.style.display =
+        "none";
+
+    firstScreen.style.display =
+        "block";
+
+    firstScreen.classList.add(
+        "fade"
+    );
+
 }
 
 
 /*
-첫 화면을 누르면 음악 + 다음 화면
+   첫 화면 어디든 클릭/터치
 */
+
 introScreen.addEventListener(
     "pointerdown",
     startExperience
@@ -482,37 +504,46 @@ introScreen.addEventListener(
 
 
 /*
-혹시 첫 번째 재생이 실패했을 경우
-사용자가 화면을 다시 누르면 음악 재생 재시도
+   혹시 브라우저가 첫 재생을 막은 경우,
+   고백 화면을 처음 클릭하면 다시 시도
 */
-document.addEventListener("pointerdown", () => {
 
-    if (!musicStarted && started) {
+document.addEventListener(
+    "pointerdown",
+    () => {
 
-        loveSong.volume = 0.65;
+        if (
+            started &&
+            loveSong.paused
+        ) {
 
-        loveSong.play()
-            .then(() => {
-                musicStarted = true;
-            })
-            .catch(() => {});
+            loveSong.play()
+                .catch(() => {});
+
+        }
 
     }
-
-});(
-    "pointerdown",
-    startExperience
 );
 
 
 
 /* ==========================================
-   PC - NO 도망
+   PC - NO 도망가기
 ========================================== */
 
 function moveNoButton() {
 
     escapeCount++;
+
+
+    /*
+       NO REJECT 상태에서는
+       절대로 다시 움직이지 않음
+    */
+
+    if (escapeCount >= 7) {
+        return;
+    }
 
 
     const padding = 30;
@@ -547,21 +578,19 @@ function moveNoButton() {
     noButton.style.position =
         "fixed";
 
-
     noButton.style.left =
         x + "px";
-
 
     noButton.style.top =
         y + "px";
 
 
     /*
-       PC에서는 여러 번 도망가면
-       NO REJECT 후 NO 제거
+       PC에서 7번 도망가면
+       NO REJECT 표시
     */
 
-    if (escapeCount >= 7) {
+    if (escapeCount === 7) {
 
         question.textContent =
             "NO REJECT";
@@ -570,22 +599,12 @@ function moveNoButton() {
             "#d00000";
 
 
-        setTimeout(() => {
+        /*
+           중요:
+           여기서는 NO를 바로 없애지 않음.
 
-            question.textContent =
-                "Do you want to go out with me?";
-
-            question.style.color =
-                "#d72832";
-
-            /*
-               여기서 처음으로 NO가 사라짐
-            */
-
-            noButton.style.display =
-                "none";
-
-        }, 1200);
+           NO REJECT가 계속 보이도록 유지.
+        */
 
     }
 
@@ -593,20 +612,20 @@ function moveNoButton() {
 
 
 /*
-   PC에서 마우스가 NO에 닿기만 해도 도망감
+   PC에서 NO에 마우스를 갖다 대면 도망
 */
 
 noButton.addEventListener(
     "mouseenter",
     () => {
 
-        const desktop =
+        const isDesktop =
             window.matchMedia(
                 "(hover: hover) and (pointer: fine)"
             ).matches;
 
 
-        if (desktop) {
+        if (isDesktop) {
 
             moveNoButton();
 
@@ -625,17 +644,17 @@ noButton.addEventListener(
     "click",
     () => {
 
-        const mobile =
+        const isMobile =
             window.matchMedia(
                 "(pointer: coarse)"
             ).matches;
 
 
         /*
-           PC에서는 클릭해도 도망가기
+           PC에서는 NO를 클릭하면 도망
         */
 
-        if (!mobile) {
+        if (!isMobile) {
 
             moveNoButton();
 
@@ -645,15 +664,15 @@ noButton.addEventListener(
 
 
         /*
-           중요:
-           NO를 실제로 눌렀을 때만 count 증가
+           실제로 NO를 눌렀을 때만
+           횟수가 올라감
         */
 
         noCount++;
 
 
         /* =========================
-           첫 번째 NO
+           1번째 NO
         ========================= */
 
         if (noCount === 1) {
@@ -665,21 +684,28 @@ noButton.addEventListener(
                 "(Think again!)";
 
 
-            setTimeout(() => {
+            setTimeout(
+                () => {
 
-                question.textContent =
-                    "Do you want to go out with me?";
+                    /*
+                       다시 첫 문장
+                    */
 
-                message.textContent =
-                    "";
+                    question.textContent =
+                        "Do you want to go out with me?";
 
-            }, 1300);
+                    message.textContent =
+                        "";
+
+                },
+                1300
+            );
 
         }
 
 
         /* =========================
-           두 번째 NO
+           2번째 NO
         ========================= */
 
         else if (noCount === 2) {
@@ -691,53 +717,68 @@ noButton.addEventListener(
                 "(Think again!)";
 
 
-            setTimeout(() => {
+            setTimeout(
+                () => {
 
-                question.textContent =
-                    "Do you want to go out with me?";
+                    question.textContent =
+                        "Do you want to go out with me?";
 
-                message.textContent =
-                    "";
+                    message.textContent =
+                        "";
 
-            }, 1300);
+                },
+                1300
+            );
 
         }
 
 
         /* =========================
-           세 번째 NO
+           3번째 NO
         ========================= */
 
         else if (noCount === 3) {
 
+            /*
+               NO를 세 번째 눌렀을 때만
+               NO REJECT
+            */
+
             question.textContent =
                 "NO REJECT";
-
-            message.textContent =
-                "";
 
             question.style.color =
                 "#d00000";
 
+            message.textContent =
+                "";
+
 
             /*
-               3번째 NO를 누른 뒤에만
-               NO 버튼 제거
+               여기서는 잠시 보여준 후
+               다시 질문으로 돌아감
             */
 
-            setTimeout(() => {
+            setTimeout(
+                () => {
 
-                question.textContent =
-                    "Do you want to go out with me?";
+                    question.textContent =
+                        "Do you want to go out with me?";
 
-                question.style.color =
-                    "#d72832";
+                    question.style.color =
+                        "#d72832";
 
 
-                noButton.style.display =
-                    "none";
+                    /*
+                       ⭐ 이제서야 NO가 사라짐
+                    */
 
-            }, 1400);
+                    noButton.style.display =
+                        "none";
+
+                },
+                1600
+            );
 
         }
 
@@ -754,9 +795,8 @@ yesButton.addEventListener(
     "click",
     () => {
 
-
         /*
-           첫 번째 음악 완전히 정지
+           첫 번째 음악 정지
         */
 
         loveSong.pause();
@@ -765,7 +805,7 @@ yesButton.addEventListener(
 
 
         /*
-           고백 화면 제거
+           고백 화면 숨김
         */
 
         firstScreen.style.display =
@@ -773,7 +813,7 @@ yesButton.addEventListener(
 
 
         /*
-           성공 화면
+           성공 화면 표시
         */
 
         successScreen.style.display =
@@ -797,15 +837,24 @@ yesButton.addEventListener(
             0.9;
 
 
-        const fanfarePromise =
+        const celebration =
             fanfare.play();
 
 
         if (
-            fanfarePromise !== undefined
+            celebration !== undefined
         ) {
 
-            fanfarePromise.catch(() => {});
+            celebration.catch(
+                (error) => {
+
+                    console.log(
+                        "Fanfare could not start:",
+                        error
+                    );
+
+                }
+            );
 
         }
 
@@ -822,7 +871,7 @@ yesButton.addEventListener(
 
 
 /* ==========================================
-   폭죽 하나
+   폭죽 하나 만들기
 ========================================== */
 
 function createFirework(
@@ -830,13 +879,25 @@ function createFirework(
     centerY
 ) {
 
-    const particles =
+    const particleCount =
         45;
+
+
+    const colors = [
+
+        "#ff5c8a",
+        "#ffcc66",
+        "#ff6b6b",
+        "#8fd3ff",
+        "#c58cff",
+        "#ffffff"
+
+    ];
 
 
     for (
         let i = 0;
-        i < particles;
+        i < particleCount;
         i++
     ) {
 
@@ -862,7 +923,7 @@ function createFirework(
             (
                 Math.PI * 2 * i
             ) /
-            particles;
+            particleCount;
 
 
         const distance =
@@ -892,20 +953,6 @@ function createFirework(
         );
 
 
-        /*
-           폭죽마다 다른 색
-        */
-
-        const colors = [
-            "#ff5c8a",
-            "#ffcc66",
-            "#ff6b6b",
-            "#8fd3ff",
-            "#c58cff",
-            "#ffffff"
-        ];
-
-
         particle.style.background =
             colors[
                 Math.floor(
@@ -920,11 +967,12 @@ function createFirework(
         );
 
 
-        setTimeout(() => {
-
-            particle.remove();
-
-        }, 1500);
+        setTimeout(
+            () => {
+                particle.remove();
+            },
+            1500
+        );
 
     }
 
@@ -933,7 +981,7 @@ function createFirework(
 
 
 /* ==========================================
-   여러 번 폭죽
+   폭죽 여러 번
 ========================================== */
 
 function startFireworks() {
@@ -974,48 +1022,73 @@ function startFireworks() {
 
 
     /*
-       첫 번째 폭죽부터
-       순서대로 터짐
+       첫 번째 폭죽
     */
 
     positions.forEach(
         (position, index) => {
 
-            setTimeout(() => {
-
-                createFirework(
-                    position[0],
-                    position[1]
-                );
-
-            }, index * 300);
-
-        }
-    );
-
-
-    /*
-       조금 뒤에 한 번 더!
-    */
-
-    setTimeout(() => {
-
-        positions.forEach(
-            (position, index) => {
-
-                setTimeout(() => {
+            setTimeout(
+                () => {
 
                     createFirework(
                         position[0],
                         position[1]
                     );
 
-                }, index * 220);
+                },
+                index * 280
+            );
 
-            }
-        );
+        }
+    );
 
-    }, 2300);
+
+    /*
+       두 번째 폭죽 세트
+    */
+
+    setTimeout(
+        () => {
+
+            positions.forEach(
+                (position, index) => {
+
+                    setTimeout(
+                        () => {
+
+                            createFirework(
+                                position[0],
+                                position[1]
+                            );
+
+                        },
+                        index * 180
+                    );
+
+                }
+            );
+
+        },
+        2300
+    );
+
+
+    /*
+       마지막 가운데 대형 폭죽
+    */
+
+    setTimeout(
+        () => {
+
+            createFirework(
+                window.innerWidth * 0.5,
+                window.innerHeight * 0.25
+            );
+
+        },
+        4200
+    );
 
 }
 
