@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Valentine 💗</title>
+
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        min-height: 100vh;
+        background: #f9e5e5;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        font-family: Georgia, serif;
+    }
+
+    .container {
+        width: 90%;
+        max-width: 900px;
+    }
+
+    .hearts {
+        font-size: 70px;
+        margin-bottom: 55px;
+    }
+
+    h1 {
+        color: #d92828;
+        font-family: monospace;
+        font-size: 32px;
+        font-weight: 500;
+        margin-bottom: 35px;
+    }
+
+    .buttons {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 15px;
+        min-height: 80px;
+    }
+
+    button {
+        border: none;
+        border-radius: 40px;
+        padding: 17px 38px;
+        font-size: 22px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.35s ease;
+    }
+
+    #yes {
+        background: #f3b2c4;
+        color: #96334f;
+    }
+
+    #no {
+        background: #fffafa;
+        color: #806d69;
+    }
+
+    #message {
+        margin-top: 25px;
+        color: #d92828;
+        font-size: 20px;
+        min-height: 30px;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="hearts">
+        🐰💕
+    </div>
+
+    <h1 id="question">
+        Dear, Will you be my Valentine?
+    </h1>
+
+    <div class="buttons">
+        <button id="yes">Yes 💕</button>
+        <button id="no">No</button>
+    </div>
+
+    <div id="message"></div>
+
+</div>
+
+<script>
+
+const yes = document.getElementById("yes");
+const no = document.getElementById("no");
+const question = document.getElementById("question");
+const message = document.getElementById("message");
+
+let count = 0;
+
+no.addEventListener("click", () => {
+
+    count++;
+
+    if (count === 1) {
+        question.textContent = "Are you sure? 🥺";
+        message.textContent = "Think again!";
+    }
+
+    else if (count === 2) {
+        question.textContent = "Really? 💔";
+        message.textContent = "Please choose again!";
+    }
+
+    else if (count === 3) {
+        question.textContent = "Are you REALLY sure?";
+        message.textContent = "Try again... 💗";
+    }
+
+    else {
+        question.textContent = "Again! 💕";
+        message.textContent = "You can't escape hehe";
+
+        const scale = Math.max(0.15, 1 - (count - 3) * 0.15);
+
+        no.style.transform = `scale(${scale})`;
+        yes.style.transform = `scale(${Math.min(1.5, 1 + (count - 3) * 0.08)})`;
+    }
+
+});
+
+yes.addEventListener("click", () => {
+
+    question.textContent = "YAY!! 💕";
+    message.textContent = "I knew you would say yes! 🥰";
+
+    no.style.display = "none";
+    yes.textContent = "💕💕💕";
+
+});
+
+</script>
+
+</body>
+</html>
